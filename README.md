@@ -27,4 +27,4 @@ Python Folder
   - File Mechanics    : Operations that can be used to manipulate files automatically. 
   
   AssemblyLanguage Folder
-      Assembly Language x86 architecture programs which I wrote at Saddleback college.
+  - Assembly Language x86 architecture programs which I wrote at Saddleback college.
