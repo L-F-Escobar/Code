@@ -1,0 +1,99 @@
+	//Main menu options
+	To list every single component of main memory, input cards & 
+	output cards press option 0.
+	
+	To put input into the input card press option 1.
+	
+	To set the program counter press 2. 
+	
+	To set a main memory cell press 3. For a sequential series of 
+	inputs into main memory continue to press 'y/Y' while still in option
+	3. If you want a non-sequential entry press 'n/N' after your 
+	previous selection. If you want to exit option 3 press 'n/N' to the 
+	sequential option and to the non-sequential option. 
+	
+	To clear the input card entirely, press 4.
+	
+	To clear main memory press 5.
+	
+	To clear the output cards press 6. 
+	
+	To clear the entire simple computer emulator press 7.
+	
+	To run the entire program all at once press 8. This will save the 
+	final vales of the CPU and all of memory into text file 'Save.txt'.
+	
+	To step through the simple computer emulator one step at a time
+	press 9. This will provide, automatically, a console view update of 
+	the CPU. 
+	
+	To show the CPU at any time during the run time of the simple 
+	computer emulator press 10.
+	
+	To save the contents of the simple computer emulator in their 
+	current form press 11. This saves the SCE into text file 'Option.txt'.
+	
+	To load a program from a text file press 12. This will load fom text
+	file 'Option.txt'.
+	
+	To exit the main menu and the entire program press -1.
+	
+	
+	
+	//This can be copied and pasted into the code right at the 
+	//beginning for a quick execution cycles. 
+	mainProgram[2] = "";
+	mainProgram[3] = "";
+	mainProgram[4] = "";
+	mainProgram[5] = "";
+	mainProgram[6] = "";
+	mainProgram[7] = "";
+	mainProgram[8] = "";
+	mainProgram[9] = "";
+	mainProgram[10] = "";
+	mainProgram[11] = "";
+	mainProgram[12] = "";
+	mainProgram[13] = "";
+	mainProgram[14] = "";
+	mainProgram[15] = "";
+	mainProgram[20] = "";
+	mainProgram[21] = "";
+	mainProgram[22] = "";
+	mainProgram[23] = "";
+	mainProgram[24] = "";
+	mainProgram[25] = "";
+	mainProgram[26] = "";
+	mainProgram[27] = "";
+	mainProgram[28] = "";
+	mainProgram[29] = "";
+	mainProgram[30] = "";
+	mainProgram[31] = "";
+	mainProgram[32] = "";
+	mainProgram[33] = "";
+	mainProgram[34] = "";
+	mainProgram[35] = "";
+	
+	mainProgram[80] = "";
+	mainProgram[81] = "";
+	mainProgram[82] = "";
+	mainProgram[83] = "";
+	mainProgram[84] = "";
+	mainProgram[85] = "";
+	mainProgram[86] = "";
+	mainProgram[87] = "";
+	mainProgram[88] = "";
+	
+	mainProgram[90] = "";
+
+	programCounter = ;
+
+	inputCard[0] = "";
+	inputCard[1] = "";
+	inputCard[2] = "";
+	inputCard[3] = "";
+	inputCard[4] = "";
+	inputCard[5] = "";
+	inputCard[6] = "";
+	inputCard[7] = "";
+	inputCard[8] = "";
+	inputCard[9] = "";

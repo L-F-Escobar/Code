@@ -1,0 +1,149 @@
+Program terminated normally.
+
+Accumulator: 0-002
+
+IR: 900
+
+Program Counter: 00
+
+
+Main Memory cells
+------------------
+Cell #00: 001
+Cell #01: 
+Cell #02: 
+Cell #03: 
+Cell #04: 
+Cell #05: 
+Cell #06: 
+Cell #07: 
+Cell #08: 
+Cell #09: 
+Cell #10: 
+Cell #11: 
+Cell #12: 
+Cell #13: 
+Cell #14: 
+Cell #15: 
+Cell #16: 
+Cell #17: 
+Cell #18: 
+Cell #19: 
+Cell #20: 804
+Cell #21: 534
+Cell #22: 035
+Cell #23: 036
+Cell #24: 435
+Cell #25: 336
+Cell #26: 732
+Cell #27: 535
+Cell #28: 434
+Cell #29: 200
+Cell #30: 534
+Cell #31: 624
+Cell #32: 114
+Cell #33: 900
+Cell #34: 002
+Cell #35: 001
+Cell #36: 003
+Cell #37: 
+Cell #38: 
+Cell #39: 
+Cell #40: 
+Cell #41: 
+Cell #42: 
+Cell #43: 
+Cell #44: 
+Cell #45: 
+Cell #46: 
+Cell #47: 
+Cell #48: 
+Cell #49: 
+Cell #50: 
+Cell #51: 
+Cell #52: 
+Cell #53: 
+Cell #54: 
+Cell #55: 
+Cell #56: 
+Cell #57: 
+Cell #58: 
+Cell #59: 
+Cell #60: 
+Cell #61: 
+Cell #62: 
+Cell #63: 
+Cell #64: 
+Cell #65: 
+Cell #66: 
+Cell #67: 
+Cell #68: 
+Cell #69: 
+Cell #70: 
+Cell #71: 
+Cell #72: 
+Cell #73: 
+Cell #74: 
+Cell #75: 
+Cell #76: 
+Cell #77: 
+Cell #78: 
+Cell #79: 
+Cell #80: 
+Cell #81: 
+Cell #82: 
+Cell #83: 
+Cell #84: 
+Cell #85: 
+Cell #86: 
+Cell #87: 
+Cell #88: 
+Cell #89: 
+Cell #90: 
+Cell #91: 
+Cell #92: 
+Cell #93: 
+Cell #94: 
+Cell #95: 
+Cell #96: 
+Cell #97: 
+Cell #98: 
+Cell #99: 032
+
+
+Input Card Cells
+----------------
+Cell #01: 007
+Cell #02: 003
+Cell #03: 
+Cell #04: 
+Cell #05: 
+Cell #06: 
+Cell #07: 
+Cell #08: 
+Cell #09: 
+Cell #10: 
+Cell #11: 
+Cell #12: 
+Cell #13: 
+Cell #14: 
+Cell #15: 
+
+
+Output Card Cells
+-----------------
+Cell #01: 
+Cell #02: 
+Cell #03: 
+Cell #04: 
+Cell #05: 
+Cell #06: 
+Cell #07: 
+Cell #08: 
+Cell #09: 
+Cell #10: 
+Cell #11: 
+Cell #12: 
+Cell #13: 
+Cell #14: 
+Cell #15: 

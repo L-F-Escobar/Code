@@ -1,0 +1,301 @@
+//ABSOLUTE VALUE
+//BEFORE RUN
+
+CPU
+----
+Accumulator: 
+PC: 20
+IR: 
+
+Listing Input Cards
+
+Input card cell #01: 004
+Input card cell #02: -005
+Input card cell #03: -003
+Input card cell #04: 
+Input card cell #05: 
+Input card cell #06: 
+Input card cell #07: 
+Input card cell #08: 
+Input card cell #09: 
+Input card cell #10: 
+Input card cell #11: 
+Input card cell #12: 
+Input card cell #13: 
+Input card cell #14: 
+Input card cell #15: 
+
+Listing Output Cards
+
+Output Cell #01: 
+Output Cell #02: 
+Output Cell #03: 
+Output Cell #04: 
+Output Cell #05: 
+Output Cell #06: 
+Output Cell #07: 
+Output Cell #08: 
+Output Cell #09: 
+Output Cell #10: 
+Output Cell #11: 
+Output Cell #12: 
+Output Cell #13: 
+Output Cell #14: 
+Output Cell #15: 
+
+Listing Main Memory
+
+Main memory cell #00: 001
+Main memory cell #01: 
+Main memory cell #02: 
+Main memory cell #03: 
+Main memory cell #04: 
+Main memory cell #05: 
+Main memory cell #06: 
+Main memory cell #07: 
+Main memory cell #08: 
+Main memory cell #09: 
+Main memory cell #10: 
+Main memory cell #11: 
+Main memory cell #12: 
+Main memory cell #13: 
+Main memory cell #14: 
+Main memory cell #15: 
+Main memory cell #16: 
+Main memory cell #17: 
+Main memory cell #18: 
+Main memory cell #19: 
+Main memory cell #20: 036
+Main memory cell #21: 037
+Main memory cell #22: 038
+Main memory cell #23: 436
+Main memory cell #24: 680
+Main memory cell #25: 539
+Main memory cell #26: 437
+Main memory cell #27: 680
+Main memory cell #28: 239
+Main memory cell #29: 539
+Main memory cell #30: 438
+Main memory cell #31: 680
+Main memory cell #32: 239
+Main memory cell #33: 539
+Main memory cell #34: 139
+Main memory cell #35: 900
+Main memory cell #36: 
+Main memory cell #37: 
+Main memory cell #38: 
+Main memory cell #39: 
+Main memory cell #40: 
+Main memory cell #41: 
+Main memory cell #42: 
+Main memory cell #43: 
+Main memory cell #44: 
+Main memory cell #45: 
+Main memory cell #46: 
+Main memory cell #47: 
+Main memory cell #48: 
+Main memory cell #49: 
+Main memory cell #50: 
+Main memory cell #51: 
+Main memory cell #52: 
+Main memory cell #53: 
+Main memory cell #54: 
+Main memory cell #55: 
+Main memory cell #56: 
+Main memory cell #57: 
+Main memory cell #58: 
+Main memory cell #59: 
+Main memory cell #60: 
+Main memory cell #61: 
+Main memory cell #62: 
+Main memory cell #63: 
+Main memory cell #64: 
+Main memory cell #65: 
+Main memory cell #66: 
+Main memory cell #67: 
+Main memory cell #68: 
+Main memory cell #69: 
+Main memory cell #70: 
+Main memory cell #71: 
+Main memory cell #72: 
+Main memory cell #73: 
+Main memory cell #74: 
+Main memory cell #75: 
+Main memory cell #76: 
+Main memory cell #77: 
+Main memory cell #78: 
+Main memory cell #79: 
+Main memory cell #80: 591
+Main memory cell #81: 499
+Main memory cell #82: 290
+Main memory cell #83: 589
+Main memory cell #84: 491
+Main memory cell #85: 787
+Main memory cell #86: 689
+Main memory cell #87: 804
+Main memory cell #88: 391
+Main memory cell #89: 
+Main memory cell #90: 600
+Main memory cell #91: 
+Main memory cell #92: 
+Main memory cell #93: 
+Main memory cell #94: 
+Main memory cell #95: 
+Main memory cell #96: 
+Main memory cell #97: 
+Main memory cell #98: 
+Main memory cell #99: 
+
+
+//AFTER RUN
+
+Program terminated normally.
+
+
+Accumulator: 0012
+
+IR: 900
+
+Program Counter: 00
+
+
+Main Memory cells
+------------------
+Cell #00: 001
+Cell #01: 
+Cell #02: 
+Cell #03: 
+Cell #04: 
+Cell #05: 
+Cell #06: 
+Cell #07: 
+Cell #08: 
+Cell #09: 
+Cell #10: 
+Cell #11: 
+Cell #12: 
+Cell #13: 
+Cell #14: 
+Cell #15: 
+Cell #16: 
+Cell #17: 
+Cell #18: 
+Cell #19: 
+Cell #20: 036
+Cell #21: 037
+Cell #22: 038
+Cell #23: 436
+Cell #24: 680
+Cell #25: 539
+Cell #26: 437
+Cell #27: 680
+Cell #28: 239
+Cell #29: 539
+Cell #30: 438
+Cell #31: 680
+Cell #32: 239
+Cell #33: 539
+Cell #34: 139
+Cell #35: 900
+Cell #36: 004
+Cell #37: -005
+Cell #38: -003
+Cell #39: 012
+Cell #40: 
+Cell #41: 
+Cell #42: 
+Cell #43: 
+Cell #44: 
+Cell #45: 
+Cell #46: 
+Cell #47: 
+Cell #48: 
+Cell #49: 
+Cell #50: 
+Cell #51: 
+Cell #52: 
+Cell #53: 
+Cell #54: 
+Cell #55: 
+Cell #56: 
+Cell #57: 
+Cell #58: 
+Cell #59: 
+Cell #60: 
+Cell #61: 
+Cell #62: 
+Cell #63: 
+Cell #64: 
+Cell #65: 
+Cell #66: 
+Cell #67: 
+Cell #68: 
+Cell #69: 
+Cell #70: 
+Cell #71: 
+Cell #72: 
+Cell #73: 
+Cell #74: 
+Cell #75: 
+Cell #76: 
+Cell #77: 
+Cell #78: 
+Cell #79: 
+Cell #80: 591
+Cell #81: 499
+Cell #82: 290
+Cell #83: 589
+Cell #84: 491
+Cell #85: 787
+Cell #86: 689
+Cell #87: 804
+Cell #88: 391
+Cell #89: 632
+Cell #90: 600
+Cell #91: -003
+Cell #92: 
+Cell #93: 
+Cell #94: 
+Cell #95: 
+Cell #96: 
+Cell #97: 
+Cell #98: 
+Cell #99: 090
+
+
+Input Card Cells
+----------------
+Cell #01: 004
+Cell #02: -005
+Cell #03: -003
+Cell #04: 
+Cell #05: 
+Cell #06: 
+Cell #07: 
+Cell #08: 
+Cell #09: 
+Cell #10: 
+Cell #11: 
+Cell #12: 
+Cell #13: 
+Cell #14: 
+Cell #15: 
+
+
+Output Card Cells
+-----------------
+Cell #01: 012
+Cell #02: 
+Cell #03: 
+Cell #04: 
+Cell #05: 
+Cell #06: 
+Cell #07: 
+Cell #08: 
+Cell #09: 
+Cell #10: 
+Cell #11: 
+Cell #12: 
+Cell #13: 
+Cell #14: 
+Cell #15: 

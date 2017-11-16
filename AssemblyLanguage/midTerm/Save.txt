@@ -1,0 +1,154 @@
+***************************************************************************
+Programmed by : Luis Fernando Escobar-Driver
+Student ID    : 638386
+Class         : CS3A --> MW --> 6:00 - 9:20pm
+Assignment    : Term Project --> Simple Computer Emulator
+***************************************************************************
+
+Accumulator: 0012
+
+IR: 900
+
+Program Counter: 00
+
+
+Main Memory cells
+------------------
+Cell #00: 001
+Cell #01: 
+Cell #02: 
+Cell #03: 
+Cell #04: 
+Cell #05: 
+Cell #06: 
+Cell #07: 
+Cell #08: 
+Cell #09: 
+Cell #10: 
+Cell #11: 
+Cell #12: 
+Cell #13: 
+Cell #14: 
+Cell #15: 
+Cell #16: 
+Cell #17: 
+Cell #18: 
+Cell #19: 
+Cell #20: 036
+Cell #21: 037
+Cell #22: 038
+Cell #23: 436
+Cell #24: 680
+Cell #25: 539
+Cell #26: 437
+Cell #27: 680
+Cell #28: 239
+Cell #29: 539
+Cell #30: 438
+Cell #31: 680
+Cell #32: 239
+Cell #33: 539
+Cell #34: 139
+Cell #35: 900
+Cell #36: 004
+Cell #37: -005
+Cell #38: -003
+Cell #39: 012
+Cell #40: 
+Cell #41: 
+Cell #42: 
+Cell #43: 
+Cell #44: 
+Cell #45: 
+Cell #46: 
+Cell #47: 
+Cell #48: 
+Cell #49: 
+Cell #50: 
+Cell #51: 
+Cell #52: 
+Cell #53: 
+Cell #54: 
+Cell #55: 
+Cell #56: 
+Cell #57: 
+Cell #58: 
+Cell #59: 
+Cell #60: 
+Cell #61: 
+Cell #62: 
+Cell #63: 
+Cell #64: 
+Cell #65: 
+Cell #66: 
+Cell #67: 
+Cell #68: 
+Cell #69: 
+Cell #70: 
+Cell #71: 
+Cell #72: 
+Cell #73: 
+Cell #74: 
+Cell #75: 
+Cell #76: 
+Cell #77: 
+Cell #78: 
+Cell #79: 
+Cell #80: 591
+Cell #81: 499
+Cell #82: 290
+Cell #83: 589
+Cell #84: 491
+Cell #85: 787
+Cell #86: 689
+Cell #87: 804
+Cell #88: 391
+Cell #89: 632
+Cell #90: 600
+Cell #91: -003
+Cell #92: 
+Cell #93: 
+Cell #94: 
+Cell #95: 
+Cell #96: 
+Cell #97: 
+Cell #98: 
+Cell #99: 090
+
+
+Input Card Cells
+----------------
+Cell #01: 004
+Cell #02: -005
+Cell #03: -003
+Cell #04: 
+Cell #05: 
+Cell #06: 
+Cell #07: 
+Cell #08: 
+Cell #09: 
+Cell #10: 
+Cell #11: 
+Cell #12: 
+Cell #13: 
+Cell #14: 
+Cell #15: 
+
+
+Output Card Cells
+-----------------
+Cell #01: 012
+Cell #02: 
+Cell #03: 
+Cell #04: 
+Cell #05: 
+Cell #06: 
+Cell #07: 
+Cell #08: 
+Cell #09: 
+Cell #10: 
+Cell #11: 
+Cell #12: 
+Cell #13: 
+Cell #14: 
+Cell #15: 
