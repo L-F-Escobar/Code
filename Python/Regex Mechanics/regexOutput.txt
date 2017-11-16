@@ -1,0 +1,46 @@
+Phone number found: 415-555-4242
+415
+415-555-4242
+(415)
+555-4242
+Batman
+Batmobile
+mobile
+Batman
+Batwoman
+415-555-4242
+555-4242
+Batman
+Batwoman
+Batwowowowoman
+Batwoman
+Batwowowowoman
+True
+HaHaHaHaHa
+HaHaHa
+415-555-9999
+['415-555-9999', '212-555-0000']
+[('415', '555', '9999'), ('212', '555', '0000')]
+['12 drummers', '11 pipers', '10 lords', '9 ladies', '8 maids', '7 swans', '6 geese', '5 rings', '4 birds', '3 hens', '2 doves', '1 partridge']
+['o', 'o', 'o', 'e', 'a', 'a', 'o', 'o', 'A', 'O', 'O']
+['R', 'b', 'c', 'p', ' ', 't', 's', ' ', 'b', 'b', 'y', ' ', 'f', 'd', '.', ' ', 'B', 'B', 'Y', ' ', 'F', 'D', '.']
+<_sre.SRE_Match object; span=(0, 5), match='Hello'>
+False
+True
+False
+<_sre.SRE_Match object; span=(16, 17), match='2'>
+True
+1234567890
+<_sre.SRE_Match object; span=(0, 10), match='1234567890'>
+['cat', 'hat', 'sat', 'lat', 'mat', 'dat']
+First Name: Al Last Name: Sweigart
+Al
+Sweigart
+<To serve man>
+<To serve man> for dinner.>
+Serve the public trust.
+Serve the public trust.
+RoBOcoP
+CENSORED gave the secret document to CENSORED.
+A**** told C**** that E**** knew B**** was a  double agent.
+714-545-8971 ext. 666

@@ -1,0 +1,1 @@
+Uses Bittrex (cryptocurrency exchange) API tools to feed data from the exchange into formatted text files. 
