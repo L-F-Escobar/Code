@@ -25,6 +25,10 @@ Python Folder
   - CryptoCurrencyAPIData : Bittrex; a cryptocurrency exchange, APIs are used to retreive certain data and output
                             said data neatly into a text file for viewing.
   - File Mechanics    : Operations that can be used to manipulate files automatically. 
+  - fileMerge         : Merges system files with a hardcoded home location.
+  - file_search       : A function which can search linux, windows, and apple file systems. 
+  - dictionary        : Built in error checks with another json dictionary program.
+  - ageCalc           : Calcs years, months, days, secs since your birth. Cannot be broken
   
   AssemblyLanguage Folder
   - Assembly Language x86 architecture programs which I wrote at Saddleback college.
