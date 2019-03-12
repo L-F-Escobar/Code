@@ -18,23 +18,22 @@ map = folium.Map(location=[37,-107.522775], zoom_start=3,
 
 featureGroup = folium.FeatureGroup(name="Volcanoes")
 
-for lt,ln,loc,elv in zip(volcData['LAT'], volcData['LON'], 
-					 volcData['LOCATION'], volcData['ELEV']):
+for lt,ln,loc,elv in zip(volcData['LAT'], volcData['LON'], volcData['LOCATION'], volcData['ELEV']):
 
 	loc = loc.strip()
 	info = loc + '\n' + str(elv)
 
 	featureGroup.add_child(folium.Marker(location=[lt,ln], 
-										 popup=str(info) + 'm',
-										 #popup=folium.Popup(str(elv),parse_html=True))
-										 icon=folium.Icon(color=color(elv))))
+					     popup=str(info) + 'm',
+					     #popup=folium.Popup(str(elv),parse_html=True))
+					     icon=folium.Icon(color=color(elv))))
 
 	# featureGroup.add_child(folium.CircleMarker(location=[lt,ln], 
-	# 									 radius=6,
-	# 									 popup=str(info),
-	# 									 #fill_color='red',
-	# 									 color='black',
-	# 									 fill_opaccity=0.7))
+# 						     radius=6,
+# 						     popup=str(info),
+# 						     fill_color='red',
+# 						     color='black',
+# 						     fill_opaccity=0.7))
 
 	
 
