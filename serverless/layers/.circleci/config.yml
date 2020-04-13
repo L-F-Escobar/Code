@@ -1,0 +1,58 @@
+version: 2
+jobs:
+  dev:
+    working_directory: ~/repo
+    docker:
+      - image: circleci/python:3.7
+    steps:
+      - checkout 
+
+      - setup_remote_docker
+
+      - run: make circleci
+
+      - run: make build TARGET=layers
+
+  deploy:
+    working_directory: ~/repo
+    docker:
+      - image: circleci/python:3.7
+    steps:
+      - checkout 
+
+      - setup_remote_docker
+
+      - run: make circleci
+
+      - run: make build TARGET=layers
+
+      - run:
+          name: Install node and npm.
+          command: |
+            curl -sL https://deb.nodesource.com/setup_11.x | sudo -E bash -
+            sudo apt-get install -y nodejs
+            node --version && npm -v 
+      - run:
+          name: Install Serverless CLI and dependencies
+          command: |
+            sudo npm i -g serverless
+            npm install
+
+      - run:
+          name: Deploy lambda layers.
+          command: make deploy TARGET=layers
+
+workflows:
+  version: 2
+  test-build:
+    jobs:
+      - dev:
+          filters:
+            branches:
+              ignore: master
+  deploy-prod:
+    jobs:
+      - deploy:
+          filters:
+            branches:
+              only: master

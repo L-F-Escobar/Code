@@ -1,0 +1,26 @@
+service: txt-requirements
+
+custom:
+  stage: ${opt:stage, self:provider.stage}
+  region: ${opt:region, self:provider.region}
+
+provider:
+  name: aws
+  runtime: python3.6
+  region: ${opt:region, 'us-east-1'}
+  timeout: 450
+  stage: ${opt:stage,'dev'}
+
+layers:
+  txtReq:
+    path: txt
+    CompatibleRuntimes: [
+      "python3.6"
+    ]
+resources:
+  Outputs:
+    OtherRequirementsLayerExport:
+        Value:
+          Ref: OtherLambdaLayer
+        Export:
+          Name: OtherLambdaLayer

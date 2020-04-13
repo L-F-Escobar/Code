@@ -1,0 +1,37 @@
+service: selenium-layer
+
+custom:
+  stage: ${opt:stage, self:provider.stage}
+  region: ${opt:region, self:provider.region}
+
+provider:
+  name: aws
+  runtime: python3.6
+  region: ${opt:region, 'us-east-1'}
+  timeout: 450
+  stage: ${opt:stage,'dev'}
+
+layers:
+  selenium:
+    path: selenium
+    CompatibleRuntimes: [
+      "python3.6"
+    ]
+  chromedriver:
+    path: chromedriver
+    description: chrome driver layer
+    CompatibleRuntimes: [
+      "python3.6"
+    ]
+resources:
+  Outputs:
+    SeleniumLayerExport:
+        Value:
+          Ref: SeleniumLambdaLayer
+        Export:
+          Name: SeleniumLambdaLayer
+    ChromedriverLayerExport:
+       Value:
+         Ref: ChromedriverLambdaLayer
+       Export:
+         Name: ChromedriverLambdaLayer
