@@ -1,0 +1,9 @@
+---
+log_name: example-log-name
+log_format: '[%(levelname)s] [%(name)s] [%(asctime)s] [%(funcName)s::%(lineno)d] [%(message)s]'
+
+LOGIN_XPATH: "//a[@class='login-link' and .='log in']"
+
+LOGIN_CREDS:
+  - username
+  - password1

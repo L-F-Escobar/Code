@@ -19,8 +19,8 @@ layers:
     ]
 resources:
   Outputs:
-    OtherRequirementsLayerExport:
+    TxtRequirementsLayerExport:
         Value:
-          Ref: OtherLambdaLayer
+          Ref: TxtReqLambdaLayer
         Export:
-          Name: OtherLambdaLayer
+          Name: TxtReqLambdaLayer

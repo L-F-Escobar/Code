@@ -1,1 +1,6 @@
 serverless/layers/venv
+serverless/lambda/venv
+*.DS_Store
+*.pyc
+*.csv
+*.txt

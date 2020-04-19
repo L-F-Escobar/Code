@@ -1,0 +1,151 @@
+service: aws-selenium-headless-chronium-example
+
+package:
+  individually: true
+
+custom:
+  stage: ${opt:stage, self:provider.stage}
+  region: ${opt:region, self:provider.region}
+  snsTopic: "snsTopicTrigger"
+  holdingBucket: "selenium-data-extractor-tester"
+
+provider:
+  name: aws
+  runtime: python3.6
+  memorySize: 3008 # optional, in MB, default is 1024. 128-3008MB range
+  timeout: 900
+  region: ${opt:region, 'us-east-1'}
+  stage: ${opt:stage,'dev'}
+  apiKeys: 
+    - ${opt:key, 'api_key'}
+  iamRoleStatements:
+    - Effect: "Allow"
+      Resource: { "Fn::Join" : [":", ["arn:aws:sns:${self:custom.region}", { "Ref" : "AWS::AccountId" }, "${self:custom.snsTopic}" ] ]  }
+      Action:
+        - "sns:*"
+  iamManagedPolicies:
+    - "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+
+functions:
+  mailFileCheck:
+    environment:
+      aws_access_key_id: ${file(../config/env-var/aws-${opt:env, 'lab'}.json):aws_access_key_id}
+      aws_secret_access_key: ${file(../config/env-var/aws-${opt:env, 'lab'}.json):aws_secret_access_key}
+      aws_region: ${file(../config/env-var/aws-${opt:env, 'lab'}.json):aws_region}
+      s3_access_key_id: ${file(../config/env-var/aws-s3-legacy-access.json):aws_access_key_id}
+      s3_secret_access_key: ${file(../config/env-var/aws-s3-legacy-access.json):aws_secret_access_key}
+      holding_bucket: ${self:custom.holdingBucket}
+      rejection_folder: ${self:custom.rejectionFolder}
+      rm_username: ${file(../config/env-var/rm_login.json):username}
+      rm_password: ${file(../config/env-var/rm_login.json):password}
+    handler: main.endpoint
+    package:
+      individually: True
+      exclude:
+        - publish.py
+        - results.py
+    layers: # Reference CloudFormation Outputs
+      - ${cf:selenium-layer-${opt:stage, 'dev'}.SeleniumLayerExport}
+      - ${cf:selenium-layer-${opt:stage, 'dev'}.ChromedriverLayerExport}
+      - ${cf:other-requirements-${opt:stage, 'dev'}.OtherRequirementsLayerExport}
+    timeout: 900 # optional, in seconds, default is 6
+    memorySize: 3008 # optional, in MB, default is 1024. 128-3008MB range
+    events:
+      - sns: ${self:custom.snsTopic}
+        # arn: !Ref Trigger
+        # topicName: InitTrigger
+
+  snsLambdaPublisher:
+    handler: publish.handler
+    package:
+      individually: true
+      exclude:
+        - func/**
+        - lib/run_filters.py
+        - main.py
+        - results.py
+    layers: # Reference CloudFormation Outputs
+      - ${cf:other-requirements-${opt:stage, 'dev'}.OtherRequirementsLayerExport}
+      # - ${cf:pandas-layer-${opt:stage, 'dev'}.PandasLayerExport}
+      # - { "Fn::Join" : [":", ["arn:aws:lambda:${self:custom.region}", { "Ref" : "AWS::AccountId" }, "AWSLambda-Python36-SciPy1x:2" ] ]  }
+    environment:
+      aws_access_key_id: ${file(../config/env-var/aws-${opt:env, 'lab'}.json):aws_access_key_id}
+      aws_secret_access_key: ${file(../config/env-var/aws-${opt:env, 'lab'}.json):aws_secret_access_key}
+      aws_region: ${file(../config/env-var/aws-${opt:env, 'lab'}.json):aws_region}
+      holding_bucket: ${self:custom.holdingBucket}
+      rejection_folder: ${self:custom.rejectionFolder}
+      sns_topic: ${self:custom.snsTopic}
+      sns_topic_arn: { "Fn::Join" : [":", ["arn:aws:sns:${self:custom.region}", { "Ref" : "AWS::AccountId" }, "${self:custom.snsTopic}" ] ]  }
+    events:
+      - http:
+          path: ${opt:publish, 'V1/publish'} # sls deploy --path RM
+          method: get
+          cors: true
+          private: true
+          integration: lambda
+          memorySize: 3008 # optional, in MB, default is 1024. 128-3008MB range
+          request:
+            template:
+              application/json: >
+                {
+                  "dropID" : "$input.params('dropID')",
+                  "rebuild" : "$input.params('rebuild')",
+                  "suppression_bucket" : "$input.params('suppression_bucket')",
+                  "suppression_key" : "$input.params('suppression_key')",
+                  "lname_filters_bucket" : "$input.params('lname_filters_bucket')",
+                  "lname_filters_key" : "$input.params('lname_filters_key')",
+                  "blank_check_bucket" : "$input.params('blank_check_bucket')",
+                  "blank_check_key" : "$input.params('blank_check_key')"
+                }
+
+  getResults:
+    handler: results.handler
+    iamRoleStatementsInherit: true
+    iamManagedPolicies:
+    - "arn:aws:iam::aws:policy/AmazonS3FullAccess"
+    # iamRoleStatements:
+    #   - Effect: "Allow"
+    #     Action: s3:GetObject
+    #     Resource: arn:aws:s3:::${self:custom.holdingBucket}
+    package:
+      individually: true
+      exclude:
+        - func/**
+        - lib/run_filters.py
+        - main.py
+        - publish.py
+    layers: # Reference CloudFormation Outputs
+      - ${cf:other-requirements-${opt:stage, 'dev'}.OtherRequirementsLayerExport}
+      # - ${cf:pandas-layer-${opt:stage, 'dev'}.PandasLayerExport}
+    environment:
+      aws_access_key_id: ${file(../config/env-var/aws-${opt:env, 'lab'}.json):aws_access_key_id}
+      aws_secret_access_key: ${file(../config/env-var/aws-${opt:env, 'lab'}.json):aws_secret_access_key}
+      aws_region: ${file(../config/env-var/aws-${opt:env, 'lab'}.json):aws_region}
+      s3_access_key_id: ${file(../config/env-var/aws-s3-legacy-access.json):aws_access_key_id}
+      s3_secret_access_key: ${file(../config/env-var/aws-s3-legacy-access.json):aws_secret_access_key}
+      holding_bucket: ${self:custom.holdingBucket}
+      rejection_folder: ${self:custom.rejectionFolder}
+    events:
+      - http:
+          path: ${opt:result, 'V1/results'} # sls deploy --path RM
+          method: get
+          cors: true
+          private: true
+          integration: lambda
+          memorySize: 3008 # optional, in MB, default is 1024. 128-3008MB range
+          request:
+            template:
+              application/json: >
+                {
+                  "dropID" : "$input.params('dropID')",
+                  "returnCSV" : "$input.params('returnCSV')"
+                }
+
+
+# resources:
+#   Resources:
+#     Trigger:
+#       Type: AWS::SNS::Topic
+#       Properties:
+#         DisplayName: Send message to mailFileChecker
+#         TopicName: InitTrigger

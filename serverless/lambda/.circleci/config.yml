@@ -1,0 +1,128 @@
+version: 2
+jobs:
+
+  test:
+    working_directory: ~/repo
+    docker:
+      - image: circleci/python:3.7
+    steps:
+      - checkout 
+
+      # - restore_cache:
+      #     keys:
+      #       - dependencies-cache-{{ checksum "./src/requirements.txt" }}
+      #       # fallback to using the latest cache if no exact match is found
+      #       - dependencies-cache
+
+      - setup_remote_docker
+
+      - run: make circleci
+
+      - run: make build TARGET=layers
+
+      - run: make build TARGET=lambda
+
+      - run:
+          name: Run pytests.
+          command: |
+            mkdir tests/reports/
+            pytest -v --tb=line --junitxml=tests/reports/results.xml --cov-report xml:tests/reports/cov.xml --cov-report html:tests/reports/cov.html --resultlog=tests/reports/testlog.log --cov=src tests/
+      
+      - store_test_results:
+          path: tests/reports/
+
+      - store_artifacts:
+          path: tests/reports/
+
+      # - save_cache:
+      #     key: dependencies-cache-{{ checksum "./src/requirements.txt" }}
+      #     paths:
+      #       - ./src
+            
+  deploy:
+    working_directory: ~/repo
+    docker:
+      - image: circleci/python:3.7
+    steps:
+      - checkout 
+
+      # - restore_cache:
+      #     keys:
+      #       - dependencies-cache-{{ checksum "./src/requirements.txt" }}
+      #       # fallback to using the latest cache if no exact match is found
+      #       - dependencies-cache
+
+      - setup_remote_docker
+
+      - run: make circleci
+
+      - run: make build TARGET=layers
+
+      - run: make build TARGET=lambda
+
+      - run:
+          name: Install node and npm.
+          command: |
+            curl -sL https://deb.nodesource.com/setup_11.x | sudo -E bash -
+            sudo apt-get install -y nodejs
+            node --version && npm -v 
+      - run:
+          name: Install Serverless CLI and dependencies
+          command: |
+            sudo npm i -g serverless
+            npm install
+
+      # - run:
+      #     name: Install Serverless plugins.
+      #     command: |
+      #       npm init -y
+      #       npm install --save serverless-python-requirements
+
+      - run:
+          name: Run pytests.
+          command: |
+            mkdir tests/reports/
+            # make test
+            pytest -v --tb=line --junitxml=tests/reports/results.xml --cov-report xml:tests/reports/cov.xml --cov-report html:tests/reports/cov.html --resultlog=tests/reports/testlog.log --cov=src tests/
+      
+      - store_test_results:
+          path: tests/reports/
+
+      - store_artifacts:
+          path: tests/reports/
+
+      # - save_cache:
+      #     key: dependencies-cache-{{ checksum "./src/requirements.txt" }}
+      #     paths:
+      #       - ./src
+
+      # - run:
+      #     name: Deploy lambda layers.
+      #     command: make deploy TARGET=layers
+
+      # - run:
+      #     name: Deploy lambda functions.
+      #     command: make deploy TARGET=lambda
+
+
+
+workflows:
+  version: 2
+
+  test-build:
+    jobs:
+      - test:
+          # context: labs
+          filters:
+            branches:
+              ignore: master
+              # only: master
+
+  deploy-labs:
+    jobs:
+      - deploy:
+          # context: labs
+          filters:
+            branches:
+              # ignore: master
+              only: master

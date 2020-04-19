@@ -1,0 +1,7 @@
+{
+    "aws_access_key_id": "access_key",
+    "aws_secret_access_key": "private_key",
+    "aws_region": "us-east-1",
+    "username": "loging_123",
+    "password": "password1"
+}
