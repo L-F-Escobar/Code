@@ -27,18 +27,13 @@ provider:
     - "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 
 functions:
-  mailFileCheck:
+  mainEngine:
     environment:
-      aws_access_key_id: ${file(../config/env-var/aws-${opt:env, 'lab'}.json):aws_access_key_id}
-      aws_secret_access_key: ${file(../config/env-var/aws-${opt:env, 'lab'}.json):aws_secret_access_key}
-      aws_region: ${file(../config/env-var/aws-${opt:env, 'lab'}.json):aws_region}
-      s3_access_key_id: ${file(../config/env-var/aws-s3-legacy-access.json):aws_access_key_id}
-      s3_secret_access_key: ${file(../config/env-var/aws-s3-legacy-access.json):aws_secret_access_key}
+      aws_region: ${file(../config/aws.json):aws_region}
       holding_bucket: ${self:custom.holdingBucket}
-      rejection_folder: ${self:custom.rejectionFolder}
-      rm_username: ${file(../config/env-var/rm_login.json):username}
-      rm_password: ${file(../config/env-var/rm_login.json):password}
-    handler: main.endpoint
+      login_username: ${file(../config/aws.json):username}
+      login_password: ${file(../config/aws.json):password}
+    handler: main.engine
     package:
       individually: True
       exclude:
@@ -47,13 +42,11 @@ functions:
     layers: # Reference CloudFormation Outputs
       - ${cf:selenium-layer-${opt:stage, 'dev'}.SeleniumLayerExport}
       - ${cf:selenium-layer-${opt:stage, 'dev'}.ChromedriverLayerExport}
-      - ${cf:other-requirements-${opt:stage, 'dev'}.OtherRequirementsLayerExport}
+      - ${cf:txt-requirements-${opt:stage, 'dev'}.TxtReqLayerExport}
     timeout: 900 # optional, in seconds, default is 6
     memorySize: 3008 # optional, in MB, default is 1024. 128-3008MB range
     events:
       - sns: ${self:custom.snsTopic}
-        # arn: !Ref Trigger
-        # topicName: InitTrigger
 
   snsLambdaPublisher:
     handler: publish.handler
@@ -61,24 +54,20 @@ functions:
       individually: true
       exclude:
         - func/**
-        - lib/run_filters.py
         - main.py
         - results.py
     layers: # Reference CloudFormation Outputs
-      - ${cf:other-requirements-${opt:stage, 'dev'}.OtherRequirementsLayerExport}
-      # - ${cf:pandas-layer-${opt:stage, 'dev'}.PandasLayerExport}
-      # - { "Fn::Join" : [":", ["arn:aws:lambda:${self:custom.region}", { "Ref" : "AWS::AccountId" }, "AWSLambda-Python36-SciPy1x:2" ] ]  }
+      - ${cf:txt-requirements-${opt:stage, 'dev'}.TxtReqLayerExport}
     environment:
-      aws_access_key_id: ${file(../config/env-var/aws-${opt:env, 'lab'}.json):aws_access_key_id}
-      aws_secret_access_key: ${file(../config/env-var/aws-${opt:env, 'lab'}.json):aws_secret_access_key}
-      aws_region: ${file(../config/env-var/aws-${opt:env, 'lab'}.json):aws_region}
+      aws_region: ${file(../config/aws.json):aws_region}
       holding_bucket: ${self:custom.holdingBucket}
-      rejection_folder: ${self:custom.rejectionFolder}
+      login_username: ${file(../config/aws.json):username}
+      login_password: ${file(../config/aws.json):password}
       sns_topic: ${self:custom.snsTopic}
       sns_topic_arn: { "Fn::Join" : [":", ["arn:aws:sns:${self:custom.region}", { "Ref" : "AWS::AccountId" }, "${self:custom.snsTopic}" ] ]  }
     events:
       - http:
-          path: ${opt:publish, 'V1/publish'} # sls deploy --path RM
+          path: ${opt:publish, 'publish'}
           method: get
           cors: true
           private: true
@@ -88,14 +77,7 @@ functions:
             template:
               application/json: >
                 {
-                  "dropID" : "$input.params('dropID')",
-                  "rebuild" : "$input.params('rebuild')",
-                  "suppression_bucket" : "$input.params('suppression_bucket')",
-                  "suppression_key" : "$input.params('suppression_key')",
-                  "lname_filters_bucket" : "$input.params('lname_filters_bucket')",
-                  "lname_filters_key" : "$input.params('lname_filters_key')",
-                  "blank_check_bucket" : "$input.params('blank_check_bucket')",
-                  "blank_check_key" : "$input.params('blank_check_key')"
+                  "arg" : "$input.params('arg')"
                 }
 
   getResults:
@@ -103,31 +85,20 @@ functions:
     iamRoleStatementsInherit: true
     iamManagedPolicies:
     - "arn:aws:iam::aws:policy/AmazonS3FullAccess"
-    # iamRoleStatements:
-    #   - Effect: "Allow"
-    #     Action: s3:GetObject
-    #     Resource: arn:aws:s3:::${self:custom.holdingBucket}
     package:
       individually: true
       exclude:
         - func/**
-        - lib/run_filters.py
         - main.py
         - publish.py
     layers: # Reference CloudFormation Outputs
-      - ${cf:other-requirements-${opt:stage, 'dev'}.OtherRequirementsLayerExport}
-      # - ${cf:pandas-layer-${opt:stage, 'dev'}.PandasLayerExport}
+      - ${cf:txt-requirements-${opt:stage, 'dev'}.TxtReqLayerExport}
     environment:
-      aws_access_key_id: ${file(../config/env-var/aws-${opt:env, 'lab'}.json):aws_access_key_id}
-      aws_secret_access_key: ${file(../config/env-var/aws-${opt:env, 'lab'}.json):aws_secret_access_key}
-      aws_region: ${file(../config/env-var/aws-${opt:env, 'lab'}.json):aws_region}
-      s3_access_key_id: ${file(../config/env-var/aws-s3-legacy-access.json):aws_access_key_id}
-      s3_secret_access_key: ${file(../config/env-var/aws-s3-legacy-access.json):aws_secret_access_key}
+      aws_region: ${file(../config/aws.json):aws_region}
       holding_bucket: ${self:custom.holdingBucket}
-      rejection_folder: ${self:custom.rejectionFolder}
     events:
       - http:
-          path: ${opt:result, 'V1/results'} # sls deploy --path RM
+          path: ${opt:result, 'results'}
           method: get
           cors: true
           private: true
@@ -137,15 +108,6 @@ functions:
             template:
               application/json: >
                 {
-                  "dropID" : "$input.params('dropID')",
-                  "returnCSV" : "$input.params('returnCSV')"
+                  "arg" : "$input.params('arg')"
                 }
-
-
-# resources:
-#   Resources:
-#     Trigger:
-#       Type: AWS::SNS::Topic
-#       Properties:
-#         DisplayName: Send message to mailFileChecker
-#         TopicName: InitTrigger
+                

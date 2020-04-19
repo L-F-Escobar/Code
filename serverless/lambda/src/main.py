@@ -11,7 +11,7 @@ LOG = get_logger(
     "'[%(levelname)s] [%(name)s]  [%(asctime)s] [%(funcName)s::%(lineno)d] [%(message)s]'",
 )
 
-def endpoint(event, context):
+def engine(event, context):
     """
         Called by api gateway.
 
@@ -23,7 +23,7 @@ def endpoint(event, context):
                                 returns those results as a response to the api call.
     """
     response = None
-    
+
     try:
         LOG.info(f"endpoint event --> {event}")
 
