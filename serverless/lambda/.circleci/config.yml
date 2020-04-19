@@ -8,11 +8,11 @@ jobs:
     steps:
       - checkout 
 
-      # - restore_cache:
-      #     keys:
-      #       - dependencies-cache-{{ checksum "./src/requirements.txt" }}
-      #       # fallback to using the latest cache if no exact match is found
-      #       - dependencies-cache
+      - restore_cache:
+          keys:
+            - dependencies-cache-{{ checksum "./src/requirements.txt" }}
+            # fallback to using the latest cache if no exact match is found
+            - dependencies-cache
 
       - setup_remote_docker
 
@@ -34,11 +34,11 @@ jobs:
       - store_artifacts:
           path: tests/reports/
 
-      # - save_cache:
-      #     key: dependencies-cache-{{ checksum "./src/requirements.txt" }}
-      #     paths:
-      #       - ./src
-            
+      - save_cache:
+          key: dependencies-cache-{{ checksum "./src/requirements.txt" }}
+          paths:
+            - ./src
+
   deploy:
     working_directory: ~/repo
     docker:
@@ -46,11 +46,11 @@ jobs:
     steps:
       - checkout 
 
-      # - restore_cache:
-      #     keys:
-      #       - dependencies-cache-{{ checksum "./src/requirements.txt" }}
-      #       # fallback to using the latest cache if no exact match is found
-      #       - dependencies-cache
+      - restore_cache:
+          keys:
+            - dependencies-cache-{{ checksum "./src/requirements.txt" }}
+            # fallback to using the latest cache if no exact match is found
+            - dependencies-cache
 
       - setup_remote_docker
 
@@ -72,17 +72,16 @@ jobs:
             sudo npm i -g serverless
             npm install
 
-      # - run:
-      #     name: Install Serverless plugins.
-      #     command: |
-      #       npm init -y
-      #       npm install --save serverless-python-requirements
+      - run:
+          name: Install Serverless plugins.
+          command: |
+            npm init -y
+            npm install --save serverless-python-requirements
 
       - run:
           name: Run pytests.
           command: |
             mkdir tests/reports/
-            # make test
             pytest -v --tb=line --junitxml=tests/reports/results.xml --cov-report xml:tests/reports/cov.xml --cov-report html:tests/reports/cov.html --resultlog=tests/reports/testlog.log --cov=src tests/
       
       - store_test_results:
@@ -91,18 +90,18 @@ jobs:
       - store_artifacts:
           path: tests/reports/
 
-      # - save_cache:
-      #     key: dependencies-cache-{{ checksum "./src/requirements.txt" }}
-      #     paths:
-      #       - ./src
+      - save_cache:
+          key: dependencies-cache-{{ checksum "./src/requirements.txt" }}
+          paths:
+            - ./src
 
-      # - run:
-      #     name: Deploy lambda layers.
-      #     command: make deploy TARGET=layers
+      - run:
+          name: Deploy lambda layers.
+          command: make deploy TARGET=layers
 
-      # - run:
-      #     name: Deploy lambda functions.
-      #     command: make deploy TARGET=lambda
+      - run:
+          name: Deploy lambda functions.
+          command: make deploy TARGET=lambda
 
 
 
