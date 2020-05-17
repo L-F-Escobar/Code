@@ -8,9 +8,11 @@
     "deploy:client": "STAGE=${STAGE:-staging} eval $(cat .env.$STAGE) serverless client deploy -s $STAGE",
     "deploy": "STAGE=${STAGE:-staging} eval $(cat .env.$STAGE) serverless deploy -v -s $STAGE",
     "deploy:mine": "STAGE=${STAGE:-staging} serverless deploy -v -s $STAGE",
-    "local": "nodemon server.js",
-    "copy": "node scripts/local.js",
-    "clean-s3": "node scripts/clean-static.js"
+
+    "dev": "node server.js",
+    "local": "node scripts/local.js",
+    "cleans3": "node scripts/clean-static.js",
+    "devs3": "node scripts/deploy-static.js"
   },
   "keywords": [],
   "author": "",

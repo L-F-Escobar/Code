@@ -3,7 +3,7 @@ const AWS = require('aws-sdk')
 const S3 = new AWS.S3()
 
 
-module.exports.handle_shortener = (event, context, callback) => {
+module.exports.handle_website = (event, context, callback) => {
   console.log("event --> " + JSON.stringify(event));
   console.log("event --> " + JSON.stringify(JSON.parse(event.body)));
 

@@ -1,5 +1,5 @@
-service: url-shortener
-app: url-shortener
+service: sls-website
+app: sls-website
 # org: ldriverescobar
 
 plugins:
@@ -20,7 +20,7 @@ custom:
       errorDocument: index.html
 
 #   customDomain:
-#     domainName: recallmaster-sls-url-shortener.com
+#     domainName: sls-website.com
 #     basePath: ''
 #     stage: ${file(config.json):STAGE}
 #     createRoute53Record: true
@@ -28,7 +28,7 @@ custom:
 
 provider:
   deploymentBucket:
-    name: my-serverless-static-website-deployment
+    name: serverless-website-deployment
   name: aws
   runtime: nodejs12.x
   stage: ${file(config.json):STAGE}
@@ -45,27 +45,53 @@ provider:
     - Effect: Allow
       Action:
         - s3:PutObject
-        - s3:GetObject
+        # - s3:GetObject
       Resource: "arn:aws:s3:::${file(config.json):BUCKET}/*"
 
 
 functions:
-  url-shortener:
+  sls-website:
     package:
       individually: true
       exclude:
-        - config.json
-        - /node_modules
-        - /frontend
+        - frontend/**
+        - scripts/**
         - package-lock.json
         - package.json
+        - server.js
+        - config.json
+        - node_modules/**
         - .gitignore
-    handler: backend/api.handle_shortener
+    handler: backend/api.handle_website
     events:
       - http:
           path: shorten
           method: post
           cors: true
+          memorySize: 3008
+
+
+    # events:
+    #   - http:
+    #       path: shorten # sls deploy --path RM
+    #       method: get
+    #       cors: post
+    #       private: true
+    #       integration: lambda
+    #       memorySize: 3008 # optional, in MB, default is 1024. 128-3008MB range
+    #       request:
+    #         template:
+    #           application/json: >
+    #             {
+    #               "dropID" : "$input.params('dropID')",
+    #               "rebuild" : "$input.params('rebuild')",
+    #               "suppression_bucket" : "$input.params('suppression_bucket')",
+    #               "suppression_key" : "$input.params('suppression_key')",
+    #               "lname_filters_bucket" : "$input.params('lname_filters_bucket')",
+    #               "lname_filters_key" : "$input.params('lname_filters_key')",
+    #               "blank_check_bucket" : "$input.params('blank_check_bucket')",
+    #               "blank_check_key" : "$input.params('blank_check_key')"
+    #             }
 
   # file-upload:
   #   package:

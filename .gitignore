@@ -5,3 +5,5 @@ serverless/sls-website/node_modules
 *.pyc
 *.csv
 *.txt
+*.serverless
+serverless/sls-website/local
