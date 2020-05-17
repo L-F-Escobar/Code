@@ -5,19 +5,19 @@ app: sls-website
 plugins:
   # - serverless-domain-manager # custom.customDomain
   - serverless-deployment-bucket
-  - serverless-finch # custom.client
-  - serverless-scriptable-plugin
+  # - serverless-finch # custom.client
+  # - serverless-scriptable-plugin
 
 
-custom:
-  scriptHooks:
-    after:deploy:finalize:
-      - echo Y | sls client deploy -v -s ${self:provider.stage}
-  client:
-      bucketName: ${file(config.json):BUCKET}
-      distributionFolder: frontend
-      indexDocument: index.html
-      errorDocument: index.html
+# custom:
+#   scriptHooks:
+#     after:deploy:finalize:
+#       - echo Y | sls client deploy -v -s ${self:provider.stage}
+#   client:
+#       bucketName: ${file(config.json):BUCKET}
+#       distributionFolder: frontend
+#       indexDocument: index.html
+#       errorDocument: index.html
 
 #   customDomain:
 #     domainName: sls-website.com
@@ -45,7 +45,7 @@ provider:
     - Effect: Allow
       Action:
         - s3:PutObject
-        # - s3:GetObject
+        - s3:GetObject
       Resource: "arn:aws:s3:::${file(config.json):BUCKET}/*"
 
 
@@ -55,9 +55,8 @@ functions:
       individually: true
       exclude:
         - frontend/**
+        - local/**
         - scripts/**
-        - package-lock.json
-        - package.json
         - server.js
         - config.json
         - node_modules/**
@@ -69,28 +68,18 @@ functions:
           method: post
           cors: true
           memorySize: 3008
-
-
     # events:
     #   - http:
-    #       path: shorten # sls deploy --path RM
-    #       method: get
-    #       cors: post
-    #       private: true
+    #       path: shorten
+    #       method: post
+    #       cors: true #post
     #       integration: lambda
-    #       memorySize: 3008 # optional, in MB, default is 1024. 128-3008MB range
+    #       memorySize: 3008
     #       request:
     #         template:
     #           application/json: >
     #             {
-    #               "dropID" : "$input.params('dropID')",
-    #               "rebuild" : "$input.params('rebuild')",
-    #               "suppression_bucket" : "$input.params('suppression_bucket')",
-    #               "suppression_key" : "$input.params('suppression_key')",
-    #               "lname_filters_bucket" : "$input.params('lname_filters_bucket')",
-    #               "lname_filters_key" : "$input.params('lname_filters_key')",
-    #               "blank_check_bucket" : "$input.params('blank_check_bucket')",
-    #               "blank_check_key" : "$input.params('blank_check_key')"
+    #               "url" : "$input.params('url')",
     #             }
 
   # file-upload:
@@ -132,6 +121,7 @@ resources:
           Statement:
           - Action:
             - s3:GetObject
+            - s3:PutObject
             Effect: Allow
             Resource:
             - arn:aws:s3:::${file(config.json):BUCKET}/*

@@ -5,7 +5,8 @@ const S3 = new AWS.S3()
 
 module.exports.handle_website = (event, context, callback) => {
   console.log("event --> " + JSON.stringify(event));
-  console.log("event --> " + JSON.stringify(JSON.parse(event.body)));
+  console.log("event.body --> " + JSON.stringify(event.body));
+  console.log("(event.body).url --> " + JSON.parse(event.body).url);
 
   let longUrl = JSON.parse(event.body).url || '';
   console.log("Longurl --> " + longUrl);
