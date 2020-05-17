@@ -1,5 +1,6 @@
 serverless/layers/venv
 serverless/lambda/venv
+serverless/sls-website/node_modules
 *.DS_Store
 *.pyc
 *.csv

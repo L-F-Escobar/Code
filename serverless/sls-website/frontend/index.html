@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.png" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Serverless url shortener</title>
+    <link href="paper.min.css" rel="stylesheet" />
+  </head>
+  <style>
+    * {
+      text-align: center;
+    }
+
+    html, body {
+        background-color: #051d2e !important;
+    }
+    
+    #message {
+      display: none;
+    }
+  </style>
+  <script src="jquery-3.2.1.min.js"></script>
+  <body>
+    <div class="row flex-center">
+      <div class="col-8 col">
+        <h2>SERVERLESS URL SHORTENER</h2>
+
+        <form id="api_gateway_form" action="https://2e2rc0ean1.execute-api.us-east-1.amazonaws.com/dev/shorten/">
+          <div class="form-group">
+            <label for="url">Enter URL to shorten</label>
+            <input
+              onblur="if(this.value==''){ this.value='https:\/\/example.com'; this.style.color='#BBB';}"
+              onfocus="if(this.value=='https:\/\/example.com'){ this.value=''; this.style.color='#000';}""
+              class="input-block"
+              name="url"
+              type="url"
+              id="url"
+              autocomplete="off"
+              required
+            />
+          </div>
+          <div id="message" class="alert alert-primary"></div>
+          <input class="paper-btn" type="submit" value="Shorten link" />
+        </form>
+
+        <p class="padding-top">
+          <a href="https://github.com/LEscobar-Driver" target=_blank>AUTHOR</a>
+        </p>
+      </div>
+    </div>
+
+    <script>
+      document.write("HELLO FROM FUCK TOWN");
+      $('api_gateway_form').submit(function(event) {
+        event.preventDefault()
+        var vanity = new URL(location.href).searchParams.get('vanity')
+        addMessage('...')
+        shortenUrlLink(event.target.action, event.target.url.value, vanity)
+      })
+
+      function shortenUrlLink(apiUrl, longUrl, vanity) {
+        $.ajax(apiUrl, {
+          type: 'POST',
+          data: JSON.stringify({ url: longUrl, vanity: vanity })
+        })
+          .done(function(responseJSON) {
+            var shortUrl =
+              window.location.protocol +
+              '//' +
+              window.location.host +
+              '/' +
+              responseJSON.path
+            addMessage(shortUrl)
+          })
+          .fail(function(data) {
+            if (data.status === 400) {
+              addMessage(data.responseJSON.message)
+            } else {
+              addMessage('an unexpected error occurred')
+            }
+          })
+      }
+
+      function addMessage(text) {
+        $('#message').text(text).show()
+      }
+    </script>
+  </body>
+</html>

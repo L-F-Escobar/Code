@@ -1,0 +1,136 @@
+service: url-shortener
+app: url-shortener
+# org: ldriverescobar
+
+plugins:
+  # - serverless-domain-manager # custom.customDomain
+  - serverless-deployment-bucket
+  - serverless-finch # custom.client
+  - serverless-scriptable-plugin
+
+
+custom:
+  scriptHooks:
+    after:deploy:finalize:
+      - echo Y | sls client deploy -v -s ${self:provider.stage}
+  client:
+      bucketName: ${file(config.json):BUCKET}
+      distributionFolder: frontend
+      indexDocument: index.html
+      errorDocument: index.html
+
+#   customDomain:
+#     domainName: recallmaster-sls-url-shortener.com
+#     basePath: ''
+#     stage: ${file(config.json):STAGE}
+#     createRoute53Record: true
+
+
+provider:
+  deploymentBucket:
+    name: my-serverless-static-website-deployment
+  name: aws
+  runtime: nodejs12.x
+  stage: ${file(config.json):STAGE}
+  region: ${file(config.json):REGION}
+  environment:
+    # API_URL: ${file(config.json):API_URL}
+    # API_DOMAIN: ${file(config.json):API_DOMAIN}
+    REGION: ${file(config.json):REGION}
+    BUCKET: ${file(config.json):BUCKET}
+    LOGS_BUCKET: ${file(config.json):LOGS_BUCKET}
+    STAGE: ${file(config.json):STAGE}
+    # SUB_DOMAIN_BUCKET: ${file(config.json):SUB_DOMAIN_BUCKET}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - s3:PutObject
+        - s3:GetObject
+      Resource: "arn:aws:s3:::${file(config.json):BUCKET}/*"
+
+
+functions:
+  url-shortener:
+    package:
+      individually: true
+      exclude:
+        - config.json
+        - /node_modules
+        - /frontend
+        - package-lock.json
+        - package.json
+        - .gitignore
+    handler: backend/api.handle_shortener
+    events:
+      - http:
+          path: shorten
+          method: post
+          cors: true
+
+  # file-upload:
+  #   package:
+  #     individually: true
+  #     exclude:
+  #       - config.json
+  #       - /node_modules
+  #       - /frontend
+  #       - package-lock.json
+  #       - package.json
+  #       - .gitignore
+  #   handler: backend/api.handle_upload
+  #   events:
+  #     - http:
+  #         path: upload
+  #         method: post
+  #         cors: true
+
+
+resources:
+  Resources:
+    ServerlessRedirectS3Bucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${file(config.json):BUCKET}
+        AccessControl: PublicRead
+        WebsiteConfiguration:
+          IndexDocument: index.html
+        # LoggingConfiguration:
+        #   DestinationBucketName: !Ref 'ServerlessLoggingBucketResource'
+        #   LogFilePrefix: testing-logs
+
+    ServerlessRedirectS3BucketPolicy:
+      Type: AWS::S3::BucketPolicy
+      Properties:
+        Bucket: ${file(config.json):BUCKET}
+        PolicyDocument:
+          Statement:
+          - Action:
+            - s3:GetObject
+            Effect: Allow
+            Resource:
+            - arn:aws:s3:::${file(config.json):BUCKET}/*
+            Principal: "*"
+
+    # ServerlessLoggingBucketResource:
+    #   Type: AWS::S3::Bucket
+    #   DeletionPolicy: Retain
+    #   Properties:
+    #     BucketName: ${file(config.json):LOGS_BUCKET}
+    #     AccessControl: LogDeliveryWrite
+
+    # ServerlessLoggingBucketPolicy:
+    #   Type: AWS::S3::BucketPolicy
+    #   DeletionPolicy: Retain
+    #   Properties:
+    #     LoggingConfiguration:
+    #       DestinationBucketName: !Ref ServerlessLoggingBucketResource
+          # - TargetPrefix: logs
+
+
+Outputs:
+  ServerlessRedirectS3Bucket:
+    Description: "Serverless Redirect S3 Bucket"
+    Value: "!Ref ServerlessRedirectS3Bucket"
+  ServerlessRedirectS3BucketPolicy:
+    Description: "Serverless Redirect S3 Bucket Policy"
+    Value: "!Ref ServerlessRedirectS3BucketPolicy"

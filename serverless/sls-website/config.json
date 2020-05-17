@@ -1,0 +1,9 @@
+{
+  "BUCKET": "luisdriver.com",
+  "LOGS_BUCKET": "luisdriver.logs.com",
+  "SUB_DOMAIN_BUCKET": "*/luisdriver.com",
+  "REGION": "us-east-1",
+  "STAGE": "dev",
+  "API_URL": "https://p42v8seop7.execute-api.us-east-1.amazonaws.com/dev/",
+  "API_DOMAIN": ""
+}
