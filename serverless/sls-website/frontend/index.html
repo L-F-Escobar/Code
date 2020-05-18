@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <!-- <link rel="shortcut icon" href="favicon.ico" /> -->
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
-    <!-- <link rel="shortcut icon" href="#"> -->
+
+    <!-- <meta>
+      <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+    </meta> -->
+
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Serverless url shortener</title>
@@ -27,7 +30,7 @@
     <div class="row flex-center">
       <div class="col-8 col">
         <h2>SERVERLESS WEBSITE</h2>
-        <form id="api_gateway_form" action="https://n7emucgrb1.execute-api.us-east-1.amazonaws.com/dev/shorten/">
+        <form id="api_gateway_form" action="https://n7emucgrb1.execute-api.us-east-1.amazonaws.com/dev/shorten">
           <div class="form-group">
             <label for="url">Enter URL to shorten</label>
             <input
@@ -51,41 +54,27 @@
       </div>
     </div>
 
+    
     <script>
-      $('api_gateway_form').submit(function(event) {
+      $('#api_gateway_form').submit(function(event) {
         event.preventDefault()
+        var vanity = new URL(location.href).searchParams.get('vanity')
         // addMessage('ONE')
         console.log(`event.target.action --> ${event.target.action}`)
         console.log(`event.target.url.value --> ${event.target.url.value}`)
-        console.log(`vanity --> ${vanity}`)
         console.log(`location.href --> ${location.href}`)
-        // document.write("HELLO FROM FUCK TOWN 666 ");
-        // document.write(event.target.action);
-        // document.write(event.target.url.value);
-        // document.write(vanity);
-        // document.write(location.href);
-        // var vanity = new URL(location.href).searchParams.get('vanity')
+        console.log(`vanity --> ${vanity}`)
         addMessage('...')
-        // ignoreFavicon(event.target.action, event.target.url.value, shortenUrlLink)
-        shortenUrlLink(event.target.action, event.target.url.value)
+        shortenUrlLink(event.target.action, event.target.url.value, vanity)
       })
-
-      // function ignoreFavicon(apiUrl, longUrl, shortenUrlLink) {
-      //   console.log(`ignoreFavicon`)
-      //   if (req.originalUrl && req.originalUrl.split("/").pop() === 'favicon.ico') {
-      //     console.log(`ignoreFavicon 999`)
-      //     return res.sendStatus(204);
-      //   }
-      //   console.log(`ignoreFavicon111`)
-      //   return shortenUrlLink(event.target.action, event.target.url.value);
-      // }
 
       function shortenUrlLink(apiUrl, longUrl) {
         console.log(`apiUrl --> ${apiUrl}`)
         console.log(`longUrl --> ${longUrl}`)
         $.ajax(apiUrl, {
           type: 'POST',
-          data: JSON.stringify({ url: longUrl})
+          data: JSON.stringify({ url: longUrl, vanity: vanity })
+          // headers: {"Access-Control-Allow-Origin": "*"},
         })
           .done(function(responseJSON) {
             var shortUrl =
