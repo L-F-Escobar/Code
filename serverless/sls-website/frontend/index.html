@@ -71,6 +71,7 @@
         if (vanity == null) {
           vanity = 'luis.driver'
         }
+        console.log(`vanity 2 --> ${vanity}`)
         $.ajax(apiUrl, {
           type: 'POST',
           data: JSON.stringify({ url: longUrl, vanity: vanity })
