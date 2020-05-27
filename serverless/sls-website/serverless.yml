@@ -58,6 +58,8 @@ functions:
         - local/**
         - scripts/**
         - server.js
+        - package-lock.json
+        - package.json
         - config.json
         - node_modules/**
         - .gitignore
