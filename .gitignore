@@ -7,3 +7,4 @@ serverless/sls-website/node_modules
 *.txt
 *.serverless
 serverless/sls-website/local
+serverless/sls-website/.env

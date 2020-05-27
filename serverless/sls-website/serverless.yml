@@ -34,8 +34,6 @@ provider:
   stage: ${file(config.json):STAGE}
   region: ${file(config.json):REGION}
   environment:
-    # API_URL: ${file(config.json):API_URL}
-    # API_DOMAIN: ${file(config.json):API_DOMAIN}
     REGION: ${file(config.json):REGION}
     BUCKET: ${file(config.json):BUCKET}
     LOGS_BUCKET: ${file(config.json):LOGS_BUCKET}
