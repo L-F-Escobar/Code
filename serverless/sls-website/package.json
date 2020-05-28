@@ -4,16 +4,15 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "build": "rm -rf ./build/ && mkdir -p ./build/ && cp -R ./public/ ./build/ && node scripts/build-template.js",
-    "deploy:client": "STAGE=${STAGE:-staging} eval $(cat .env.$STAGE) serverless client deploy -s $STAGE",
-    "deploy": "STAGE=${STAGE:-staging} eval $(cat .env.$STAGE) serverless deploy -v -s $STAGE",
-    "deploy:mine": "STAGE=${STAGE:-staging} serverless deploy -v -s $STAGE",
-
+    "deploy:client": "STAGE=${STAGE:-dev} eval $(cat .$STAGE.env) serverless client deploy -s $STAGE",
+    "deploy": "STAGE=${STAGE:-dev} export $(cat .$STAGE.env) && serverless deploy -v",
+    "deploy:func": "export $(cat .dev.env) && serverless deploy function -f sls-website",
+    "test": "STAGE=${STAGE:-dev} export $(cat .$STAGE.env) && echo ${BUCKET} ${SUB_DOMAIN_BUCKET} ${STAGE}",
     "dev": "node server.js",
     "local": "node scripts/local.js",
-    "cleanW": "node scripts/clean-website.js",
-    "cleanL": "node scripts/clean-logs.js",
-    "deploys3": "node scripts/deploy-website.js"
+    "cleanWeb": "node scripts/clean-website.js",
+    "cleanLog": "node scripts/clean-logs.js",
+    "uploads3": "node scripts/deploy-website.js"
   },
   "keywords": [],
   "author": "",

@@ -20,8 +20,8 @@ module.exports.handle_website = (event, context, callback) => {
     .then(function (path) {
       console.log('TWO')
       console.log("path --> " + path);
-      let redirect = buildRedirect(path, longUrl)
-      return saveRedirect(redirect)
+      let redirect_code = buildRedirect(path, longUrl)
+      return saveRedirect(redirect_code)
     })
     .then(function (path) {
       console.log('THREE')
@@ -42,10 +42,10 @@ module.exports.handle_website = (event, context, callback) => {
 }
 
 
-
 function buildResponse (statusCode, message, path = false) {
   let body = { message }
   if (path) body['path'] = path
+
   console.log(`\nIn buildResponse`)
   console.log(`body --> ${body}`)
 
@@ -78,6 +78,7 @@ function validate (longUrl) {
   return Promise.resolve(longUrl)
 }
 
+
 function generatePath (path = '') {
   /*
   Recursive function. Appends {path} one at a time till its 7 
@@ -98,6 +99,7 @@ function generatePath (path = '') {
 
   return generatePath(path + character)
 }
+
 
 // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#headObject-property
 function isPathFree (path) {
@@ -124,6 +126,7 @@ function isPathFree (path) {
       }
     })
 }
+
 
 function buildRedirect (path, longUrl = false) {
   let redirect = {

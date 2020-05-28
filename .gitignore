@@ -8,3 +8,5 @@ serverless/sls-website/node_modules
 *.serverless
 serverless/sls-website/local
 serverless/sls-website/.env
+
+*.env

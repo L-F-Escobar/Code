@@ -1,50 +1,49 @@
-service: sls-website
-app: sls-website
-# org: ldriverescobar
+service: ${env:service}
+app: ${env:service}
 
 plugins:
   # - serverless-domain-manager # custom.customDomain
   - serverless-deployment-bucket
-  # - serverless-finch # custom.client
+  - serverless-finch # custom.client
   # - serverless-scriptable-plugin
 
 
-# custom:
-#   scriptHooks:
-#     after:deploy:finalize:
-#       - echo Y | sls client deploy -v -s ${self:provider.stage}
-#   client:
-#       bucketName: ${file(config.json):BUCKET}
-#       distributionFolder: frontend
-#       indexDocument: index.html
-#       errorDocument: index.html
-
+custom:
+  scriptHooks:
+    after:deploy:finalize:
+      - echo Y | sls client deploy -v -s ${env:STAGE}
+  client:
+      bucketName: ${env:BUCKET}
+      distributionFolder: frontend
+      indexDocument: index.html
+      errorDocument: index.html
 #   customDomain:
-#     domainName: sls-website.com
+#     domainName: ${env:API_DOMAIN}
 #     basePath: ''
-#     stage: ${file(config.json):STAGE}
-#     createRoute53Record: true
+#     stage: ${env:STAGE}
+#     createRoute53Record: false
 
 
 provider:
   deploymentBucket:
-    name: serverless-website-deployment
+    name: ${env:DEPLOYMENT_BUCKET}
   name: aws
   runtime: nodejs12.x
-  stage: ${file(config.json):STAGE}
-  region: ${file(config.json):REGION}
+  stage: ${env:STAGE}
+  region: ${env:REGION}
   environment:
-    REGION: ${file(config.json):REGION}
-    BUCKET: ${file(config.json):BUCKET}
-    LOGS_BUCKET: ${file(config.json):LOGS_BUCKET}
-    STAGE: ${file(config.json):STAGE}
-    # SUB_DOMAIN_BUCKET: ${file(config.json):SUB_DOMAIN_BUCKET}
+    REGION: ${env:REGION}
+    BUCKET: ${env:BUCKET}
+    LOGS_BUCKET: ${env:LOGS_BUCKET}
+    STAGE: ${env:STAGE}
+    SUB_DOMAIN_BUCKET_1: ${env:SUB_DOMAIN_BUCKET_1}
+    SUB_DOMAIN_BUCKET_2: ${env:SUB_DOMAIN_BUCKET_2}
   iamRoleStatements:
     - Effect: Allow
       Action:
         - s3:PutObject
         - s3:GetObject
-      Resource: "arn:aws:s3:::${file(config.json):BUCKET}/*"
+      Resource: "arn:aws:s3:::${env:BUCKET}/*"
 
 
 functions:
@@ -105,7 +104,7 @@ resources:
     ServerlessRedirectS3Bucket:
       Type: AWS::S3::Bucket
       Properties:
-        BucketName: ${file(config.json):BUCKET}
+        BucketName: ${env:BUCKET}
         AccessControl: PublicRead
         WebsiteConfiguration:
           IndexDocument: index.html
@@ -116,7 +115,7 @@ resources:
     ServerlessRedirectS3BucketPolicy:
       Type: AWS::S3::BucketPolicy
       Properties:
-        Bucket: ${file(config.json):BUCKET}
+        Bucket: ${env:BUCKET}
         PolicyDocument:
           Statement:
           - Action:
@@ -124,24 +123,8 @@ resources:
             - s3:PutObject
             Effect: Allow
             Resource:
-            - arn:aws:s3:::${file(config.json):BUCKET}/*
+            - arn:aws:s3:::${env:BUCKET}/*
             Principal: "*"
-
-    # ServerlessLoggingBucketResource:
-    #   Type: AWS::S3::Bucket
-    #   DeletionPolicy: Retain
-    #   Properties:
-    #     BucketName: ${file(config.json):LOGS_BUCKET}
-    #     AccessControl: LogDeliveryWrite
-
-    # ServerlessLoggingBucketPolicy:
-    #   Type: AWS::S3::BucketPolicy
-    #   DeletionPolicy: Retain
-    #   Properties:
-    #     LoggingConfiguration:
-    #       DestinationBucketName: !Ref ServerlessLoggingBucketResource
-          # - TargetPrefix: logs
-
 
 Outputs:
   ServerlessRedirectS3Bucket:
