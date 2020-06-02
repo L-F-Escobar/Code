@@ -5,7 +5,7 @@ const exec = require('child_process').exec
 const BUCKET = "luisdriver.com"
 const REGION = 'us-east-1'
 
-let command = `aws s3 rm s3://${BUCKET} --recursive --exclude favicon.png --exclude index.html --exclude favicon.ico --exclude jquery-3.2.1.min.js --exclude paper.min.css`
+let command = `aws s3 rm s3://${BUCKET} --recursive --exclude index.css --exclude favicon.png --exclude index.html --exclude favicon.ico --exclude jquery-3.2.1.min.js --exclude paper.min.css`
 
 exec(command, function (error, stdout, stderr) {
   if (stderr) {

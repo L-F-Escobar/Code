@@ -2,6 +2,7 @@
 <html lang="en">
 
   <head>
+    <link rel="stylesheet" type="text/css" href="index.css">
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -9,31 +10,19 @@
     <link href="paper.min.css" rel="stylesheet" />
   </head>
 
-  <style>
-    * {
-      text-align: center;
-    }
-
-    html, body {
-        background-color: #22923b !important;
-    }
-
-    #message {
-      display: none;
-    }
-  </style>
-
   <script src="jquery-3.2.1.min.js"></script>
+
   <body>
-    <div class="row flex-center">
+    <div class="row flex-center" id="url">
       <div class="col-8 col">
         <h2>SERVERLESS WEBSITE</h2>
         <form id="api_gateway_form" action="https://n7emucgrb1.execute-api.us-east-1.amazonaws.com/dev/shorten">
           <div class="form-group">
             <label for="url">Enter URL to shorten</label>
             <input
-              onblur="if(this.value==''){ this.value='https:\/\/example.com'; this.style.color='#BBB';}"
-              onfocus="if(this.value=='https:\/\/example.com'){ this.value=''; this.style.color='#000';}""
+              placeholder="https://www.example.com"
+              onblur="if(this.value==''){ this.value='https:\/\/www.example.com'; this.style.color='#BBB';}"
+              onfocus="if(this.value=='https:\/\/www.example.com'){ this.value=''; this.style.color='#000';}""
               class="input-block"
               name="url"
               type="url"
@@ -52,8 +41,48 @@
       </div>
     </div>
 
-    
+    <div id="info-block">
+      <div style="color:red;">Your information</div>
+      <div id="ip"></div>
+      <div id="coor"></div>
+      <div id="city"></div>
+      <div id="region"></div>
+      <div id="country"></div>
+      <div id="tz"></div>
+      <!-- <img height="100" style="max-width: 120px;background-position: top left;" src="favicon.ico" /> -->
+      <!-- <h3>Test header</h3>
+      <p>Test text</p> -->
+    </div>
+
+    <div id="crypto-block">
+      <div style="color:red;">Bitcoin & Ethereum</div>
+      <img height="100" style="max-width: 120px;background-position: top left;" src="favicon.ico" />
+      <h3>Test header</h3>
+      <p>Test text</p>
+    </div>
+
     <script>
+
+    $.getJSON('https://json.geoiplookup.io/api?callback=?', function(data) {
+      console.log(JSON.stringify(data, null, 2));
+
+      const allowed = ['ip', 'latitude', 'longitude', 'city', 'country_name', 'region', 'timezone_name'];
+
+      // const filtered = Object.keys(data)
+      //   .filter(key => allowed.includes(key))
+      //   .reduce((obj, key) => {
+      //     obj[key] = data[key];
+      //     return obj;
+      //   }, {});
+
+      addIP(data['ip']);
+      addCity(data['city']);
+      addRegion(data['region']);
+      addCountry(data['country_name']);
+      addLongLat(data['longitude'], data['latitude']);
+      addTZ(data['timezone_name']);
+    });
+
       $('#api_gateway_form').submit(function(event) {
         event.preventDefault()
         var vanity = new URL(location.href).searchParams.get('vanity')
@@ -96,6 +125,30 @@
 
       function addMessage(text) {
         $('#message').text(text).show()
+      }
+
+      function addIP(text) {
+        $('#ip').text('IP: ' + text).show()
+      }
+
+      function addLongLat(long, lat) {
+        $('#coor').text('LONG: ' + long + ' LAT: ' + lat).show()
+      }
+
+      function addCity(city) {
+        $('#city').text('CITY: ' + city).show()
+      }
+
+      function addCountry(country) {
+        $('#country').text('COUNTRY: ' + country).show()
+      }
+
+      function addRegion(region) {
+        $('#region').text('REGION: ' + region).show()
+      }
+
+      function addTZ(timezone) {
+        $('#tz').text('TIMEZONE: ' + timezone).show()
       }
     </script>
   </body>

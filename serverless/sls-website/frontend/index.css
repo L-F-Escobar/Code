@@ -1,0 +1,41 @@
+* {
+    text-align: center;
+  }
+
+html, body {
+    background-color: #22923b !important;
+}
+
+#info-block {
+    border-width: 4px;
+    border-color: #4682B4;
+    background-color: #E0FFFF;
+    width: 300px;
+    text-align: center;
+    line-height:30px;
+    padding:3px 0;
+    float:left;
+}
+
+#crypto-block {
+    border-width: 4px;
+    border-color: #4682B4;
+    background-color: #E0FFFF;
+    width: 300px;
+    text-align: center;
+    line-height:30px;
+    padding:3px 0;
+    float:right;
+}
+
+img{
+    float:left;
+}
+
+#message {
+    display: none;
+  }
+
+#ip {
+    display: none;
+  }

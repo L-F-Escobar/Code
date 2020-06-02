@@ -1,5 +1,5 @@
-service: ${env:service}
-app: ${env:service}
+service: ${env:SERVICE}
+app: ${env:SERVICE}
 
 plugins:
   # - serverless-domain-manager # custom.customDomain
