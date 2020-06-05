@@ -15,6 +15,8 @@
   <body>
     <div class="row flex-center" id="url">
       <div class="col-8 col">
+        <!-- <img src="dev.png" style="width:200px;height:200px;">  -->
+        <img src="dev.png"> 
         <h2>SERVERLESS WEBSITE</h2>
         <form id="api_gateway_form" action="https://n7emucgrb1.execute-api.us-east-1.amazonaws.com/dev/shorten">
           <div class="form-group">
@@ -34,7 +36,6 @@
           <div id="message" class="alert alert-primary"></div>
           <input class="paper-btn" type="submit" value="Shorten link" />
         </form>
-
         <p class="padding-top">
           <a href="https://github.com/LEscobar-Driver" target=_blank>AUTHOR</a>
         </p>
@@ -42,7 +43,7 @@
     </div>
 
     <div id="info-block">
-      <div style="color:red;">Your information</div>
+      <div style="color:red;">Your Information</div>
       <div id="ip"></div>
       <div id="coor"></div>
       <div id="city"></div>
@@ -50,38 +51,33 @@
       <div id="country"></div>
       <div id="tz"></div>
       <!-- <img height="100" style="max-width: 120px;background-position: top left;" src="favicon.ico" /> -->
-      <!-- <h3>Test header</h3>
-      <p>Test text</p> -->
     </div>
 
     <div id="crypto-block">
-      <div style="color:red;">Bitcoin & Ethereum</div>
-      <img height="100" style="max-width: 120px;background-position: top left;" src="favicon.ico" />
-      <h3>Test header</h3>
-      <p>Test text</p>
+      <div style="color:red;">Cryptocurrency</div>
+      <div id="btc"></div>
+      <div id="eth"></div>
     </div>
 
     <script>
 
-    $.getJSON('https://json.geoiplookup.io/api?callback=?', function(data) {
-      console.log(JSON.stringify(data, null, 2));
+      // $.getJSON('https://json.geoiplookup.io/api?callback=?', function(data) {
+      //   console.log(JSON.stringify(data, null, 2));
 
-      const allowed = ['ip', 'latitude', 'longitude', 'city', 'country_name', 'region', 'timezone_name'];
+      //   addIP(data['ip']);
+      //   addCity(data['city']);
+      //   addRegion(data['region']);
+      //   addCountry(data['country_name']);
+      //   addLongLat(data['longitude'], data['latitude']);
+      //   addTZ(data['timezone_name']);
+      // });
 
-      // const filtered = Object.keys(data)
-      //   .filter(key => allowed.includes(key))
-      //   .reduce((obj, key) => {
-      //     obj[key] = data[key];
-      //     return obj;
-      //   }, {});
+      // $.getJSON('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=USD&include_market_cap=true&include_24hr_vol=true&include_24hr_change=true&include_last_updated_at=true', function(data) {
+      //   console.log(JSON.stringify(data));
 
-      addIP(data['ip']);
-      addCity(data['city']);
-      addRegion(data['region']);
-      addCountry(data['country_name']);
-      addLongLat(data['longitude'], data['latitude']);
-      addTZ(data['timezone_name']);
-    });
+      //   addBitcoin(data['bitcoin']['usd']);
+      //   addEthereum(data['ethereum']['usd']);
+      // });
 
       $('#api_gateway_form').submit(function(event) {
         event.preventDefault()
@@ -149,6 +145,18 @@
 
       function addTZ(timezone) {
         $('#tz').text('TIMEZONE: ' + timezone).show()
+      }
+
+      function addBitcoin(data) {
+        $('#btc').text('BITCOIN: ' + data).show()
+      }
+
+      function addMarketCap(coin, data) {
+        $('#btc').text(coin + ': ' + data).show()
+      }
+
+      function addEthereum(data) {
+        $('#eth').text('ETHEREUM: ' + data).show()
       }
     </script>
   </body>
