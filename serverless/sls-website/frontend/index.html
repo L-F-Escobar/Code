@@ -15,8 +15,6 @@
   <body>
     <div class="row flex-center" id="url">
       <div class="col-8 col">
-        <!-- <img src="dev.png" style="width:200px;height:200px;">  -->
-        <img src="dev.png"> 
         <h2>SERVERLESS WEBSITE</h2>
         <form id="api_gateway_form" action="https://n7emucgrb1.execute-api.us-east-1.amazonaws.com/dev/shorten">
           <div class="form-group">
@@ -61,23 +59,23 @@
 
     <script>
 
-      // $.getJSON('https://json.geoiplookup.io/api?callback=?', function(data) {
-      //   console.log(JSON.stringify(data, null, 2));
+      $.getJSON('https://json.geoiplookup.io/api?callback=?', function(data) {
+        console.log(JSON.stringify(data, null, 2));
 
-      //   addIP(data['ip']);
-      //   addCity(data['city']);
-      //   addRegion(data['region']);
-      //   addCountry(data['country_name']);
-      //   addLongLat(data['longitude'], data['latitude']);
-      //   addTZ(data['timezone_name']);
-      // });
+        addIP(data['ip']);
+        addCity(data['city']);
+        addRegion(data['region']);
+        addCountry(data['country_name']);
+        addLongLat(data['longitude'], data['latitude']);
+        addTZ(data['timezone_name']);
+      });
 
-      // $.getJSON('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=USD&include_market_cap=true&include_24hr_vol=true&include_24hr_change=true&include_last_updated_at=true', function(data) {
-      //   console.log(JSON.stringify(data));
+      $.getJSON('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=USD&include_market_cap=true&include_24hr_vol=true&include_24hr_change=true&include_last_updated_at=true', function(data) {
+        console.log(JSON.stringify(data));
 
-      //   addBitcoin(data['bitcoin']['usd']);
-      //   addEthereum(data['ethereum']['usd']);
-      // });
+        addBitcoin(data['bitcoin']['usd']);
+        addEthereum(data['ethereum']['usd']);
+      });
 
       $('#api_gateway_form').submit(function(event) {
         event.preventDefault()
