@@ -1,0 +1,39 @@
+# .coveragerc to control coverage.py
+[run]
+branch = True
+data_file = flask/sqlalchemy/breaks/default/coverage/report.broken
+omit =
+    # omit anything in a directory anywhere
+    */.local/*
+    */tests/*
+    # omit this file
+    *__init__*
+
+[report]
+show_missing = True
+
+# Regexes for lines to exclude from consideration
+exclude_lines =
+
+    # No worries about missing debug-only code:
+    def __repr__
+    if self\.debug
+
+    # No worries if non-runnable code isn't run:
+    if 0:
+    if __name__ == .__main__.:
+
+    # Model imports do not need to be included in coverage
+    if os.environ.get('ENV') == 'TESTING': from tests.db import db
+    else: from app import app, db
+
+ignore_errors = True
+
+precision = 2
+
+[xml]
+output = tests/reports/xml/junit.xml
+
+[html]
+directory = tests/reports/html
+title = coverage_report

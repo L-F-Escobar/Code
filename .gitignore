@@ -1,12 +1,12 @@
-serverless/layers/venv
-serverless/lambda/venv
-serverless/sls-website/node_modules
 *.DS_Store
 *.pyc
 *.csv
 *.txt
 *.serverless
+*.env
+*venv
+*node_modules
 serverless/sls-website/local
 serverless/sls-website/.env
 
-*.env
+Testing/test.db
