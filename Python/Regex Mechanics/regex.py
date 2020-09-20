@@ -119,6 +119,10 @@ nongreedyHaRegex = re.compile(r'(Ha){3,5}?')
 matchObject2 = nongreedyHaRegex.search('HaHaHaHaHa')
 print(matchObject2.group())#HaHaHa
  
+matchObject1 = greedyHaRegex.search('HaHa')
+print(matchObject1 == None)
+
+ 
 ##
 # The FINDALL() method
 # Will return the strings of every match, instead of just the first like
@@ -155,6 +159,12 @@ print(matchStrList)#['12 drummers', '11 pipers', '10 lords', '9 ladies',
                    #'8 maids', '7 swans', '6 geese', '5 rings', '4 birds', 
                    #'3 hens', '2 doves', '1 partridge']
  
+xmasRegex = re.compile(r'\d+\s\w')
+matchStrList = xmasRegex.findall('12 drummers, 11 pipers, 10 lords,' + 
+                                ' 9 ladies, 8 maids, 7 swans, 6 geese,' + 
+                                ' 5 rings, 4 birds, 3 hens, 2 doves, 1 partridge')
+print(matchStrList)#['12 d', '11 p', '10 l', '9 l', '8 m', '7 s', '6 g', '5 r', '4 b', '3 h', '2 d', '1 p']
+ 
 ##
 #Creating my own character classes
 # use '[]'
@@ -177,7 +187,7 @@ print(matchStrList)#['R', 'b', 'c', 'p', ' ', 't', 's', ' ', 'b', 'b',
 ##
 # (^) - carrot
 # start of a regex to indicate a match must occure at the beginning
-# ($) - dollar side
+# ($) - dollar sign
 # at end of regex to indicate the string must end with the regex
 #
 beginsWithHello = re.compile(r'^Hello')
@@ -205,8 +215,8 @@ print(matchObject1)#<_sre.SRE_Match object; span=(0, 10), match='1234567890'>
 # will match any character except for a newline
 #
 atRegex = re.compile(r'.at')
-matchStrList = atRegex.findall('The cat in the hat sat on the flat mat. asdatfsv')
-print(matchStrList)#['cat', 'hat', 'sat', 'lat', 'mat', 'dat']
+matchStrList = atRegex.findall('The cat in the hat sat on the flat mat. asdatfsv. #at')
+print(matchStrList)#['cat', 'hat', 'sat', 'lat', 'mat', 'dat', '#at']
  
 ##
 # Dot-Star (.*)
@@ -235,8 +245,8 @@ noNewlineRegex = re.compile('.*')
 matchObject = noNewlineRegex.search('Serve the public trust.\nProtect the innocent.\nUphold the law.')
 print(matchObject.group())#Serve the public trust.
 
-test = re.DOTALL
-newlineRegex = re.compile('.*', )
+dotall_flag = re.DOTALL
+newlineRegex = re.compile('.*', dotall_flag)
 matchObject = newlineRegex.search('Serve the public trust.\nProtect the innocent.\nUphold the law.')
 print(matchObject.group())
 #Serve the public trust.
@@ -244,7 +254,7 @@ print(matchObject.group())
 #Uphold the law.
 
 
-#from regex import nameRegex
+
 
 ##
 #re.I or re.IGNORECASE
