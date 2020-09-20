@@ -277,7 +277,19 @@ agentNamesRegex = re.compile(r'Agent (\w)\w*')
 matchStr = agentNamesRegex.sub(r'\1****', 'Agent Alice told Agent Carol'
                                + ' that Agent Eve knew Agent Bob was a '
                                + ' double agent.')
-print(matchStr)
+print(matchStr) #A**** told C**** that E**** knew B**** was a  double agent. 
+
+agentNamesRegex = re.compile(r'Agent (\w)\w*')
+matchStr = agentNamesRegex.sub(r'\1****', 'Agent Alice told Agent Ca'
+                               + ' that Agent Eve knew Agent Bob was a '
+                               + ' double agent.')
+print(matchStr) #A**** told C**** that E**** knew B**** was a  double agent. 
+
+agentNamesRegex = re.compile(r'Agent (\w)\w+')
+matchStr = agentNamesRegex.sub(r'\1****', 'Agent Ahntntbtybtylice told Agent C'
+                               + ' that Agent Eve knew Agent Bob was a '
+                               + ' double agent.')
+print(matchStr) #A**** told Agent C that E**** knew B**** was a  double agent.
 
 ##
 #re.verbose
